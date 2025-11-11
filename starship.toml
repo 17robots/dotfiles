@@ -1,0 +1,2 @@
+command_timeout=200
+format="[$directory$git_branch$git_status]($style)$character"
