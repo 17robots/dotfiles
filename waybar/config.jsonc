@@ -1,0 +1,27 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "bottom",
+  "spacing": 10,
+  "height": 10,
+  "modules-left": [],
+  "modules-center": ["pulseaudio", "clock", "cpu", "memory"],
+  "modules-right": [],
+  "pulseaudio": {
+    "format": "v {volume}%",
+    "format-muted": "mut"
+  },
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "interval": 1,
+    "tooltip-format": "{:%A %d %B %Y}"
+  },
+  "memory": {
+    "format": "r {percentage}%",
+    "interval": 1
+  },
+  "cpu": {
+    "format": "c {usage}%",
+    "interval": 1
+  }
+}
