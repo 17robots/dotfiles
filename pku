@@ -1,0 +1,37 @@
+#!/bin/bash
+ 
+fzf_args=(
+  --multi
+  --preview 'echo "Commands: alt-p: toggle preview, alt-j/k: scroll, F11: maximize"; echo; paru -Qi {1}'
+  --preview-window 'down:65%:wrap'
+  --bind 'alt-p:toggle-preview'
+  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up'
+  --bind 'alt-k:preview-up,alt-j:preview-down'
+  --header 'Select packages to remove (Tab for multi-selection, Enter to confirm)'
+)
+ 
+echo "Loading installed packages..."
+pkg_name=$(paru -Qqe | fzf "${fzf_args[@]}")
+ 
+if [[ -n "$pkg_name" ]]; then
+  echo "Removing: $pkg_name"
+  echo "WARNING: This will remove the package and its unused dependencies"
+  read -p "Continue? (y/N): " confirm
+ 
+  if [[ $confirm =~ ^[Yy]$ ]]; then
+    paru -Rns --noconfirm $pkg_name
+ 
+    # Update file database
+    if command -v updatedb >/dev/null 2>&1; then
+      sudo updatedb
+    fi
+ 
+    echo "Removal completed!"
+  else
+    echo "Operation cancelled."
+  fi
+ 
+  read -p "Press Enter to continue..."
+else
+  echo "No packages selected."
+fi

@@ -1,0 +1,28 @@
+#!/bin/bash
+ 
+fzf_args=(
+  --multi
+  --preview 'echo "Commands: alt-p: toggle preview, alt-j/k: scroll, F11: maximize"; echo; paru -Sii {1}'
+  --preview-window 'down:65%:wrap'
+  --bind 'alt-p:toggle-preview'
+  --bind 'alt-d:preview-half-page-down,alt-u:preview-half-page-up'
+  --bind 'alt-k:preview-up,alt-j:preview-down'
+  --header 'Select packages to install (Tab for multi-selection, Enter to confirm)'
+)
+ 
+echo "Loading package list..."
+pkg_name=$(paru -Slq | fzf "${fzf_args[@]}")
+ 
+if [[ -n "$pkg_name" ]]; then
+  echo "Installing: $pkg_name"
+  paru -Sy --noconfirm $pkg_name
+ 
+  if command -v updatedb >/dev/null 2>&1; then
+    sudo updatedb
+  fi
+ 
+  echo "Installation completed!"
+  read -p "Press Enter to continue..."
+else
+  echo "No packages selected."
+fi
