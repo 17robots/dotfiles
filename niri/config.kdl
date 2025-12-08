@@ -1,6 +1,3 @@
-environment {
-  DISPLAY ":0"
-}
 overview {
   zoom 0.3
   workspace-shadow {
@@ -80,7 +77,6 @@ layout {
 spawn-at-startup "mako"
 spawn-at-startup "sunsetr"
 spawn-at-startup "waybar"
-spawn-at-startup "xwayland-satellite"
 
 layer-rule {
   match namespace="waybar"
@@ -112,8 +108,8 @@ window-rule {
 draw-border-with-background false
   match app-id="code"
   match app-id="ghostty"
+  match app-id="alacritty"
   match app-id="discord"
-  match app-id="org.kde.Dolphin"
   match app-id="zen"
   match app-id="obsidian"
   opacity 0.95
@@ -132,7 +128,7 @@ draw-border-with-background false
 binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
-    Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "ghostty"; }
+    Mod+Return hotkey-overlay-title="Open a Terminal" { spawn "alacritty"; }
     Mod+Space hotkey-overlay-title="Run an Application" { spawn "fuzzel"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen" { spawn "swaylock"; }
 
